@@ -8,6 +8,13 @@ namespace ACM.BL
 {
     public class CustomerRepository
     {
+        public CustomerRepository()
+        {
+            // Establishes a collaborative relationship between CustomerRepository and AddressRepository
+            addressRepository = new AddressRepository();
+        }
+        private AddressRepository addressRepository { get; set; }
+
         /// <summary>
         /// Retrieve one customer.
         /// </summary>
@@ -22,11 +29,13 @@ namespace ACM.BL
             // Code that retrieves the defined customer
 
             //Temporary hard-coded values to return a populated customer
+            // and address
             if(customerId == 1)
             {
                 customer.EmailAdress = "fbaggins@hobbiton.me";
                 customer.FirstName = "Frodo";
                 customer.Lastname = "Baggins";
+                customer.AddressList = addressRepository.RetrieveByCustomerId(customerId).ToList();     // when any code requests to retrieve a customer, Retrieve method will retrieve and populate the customer and its associated addresses.
             }
             return customer;
         }
